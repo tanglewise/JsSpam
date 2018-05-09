@@ -37,7 +37,7 @@ function get_node_info() {
 }
 
 function send_tx() {
-  iota.api.sendTransfer(allnine, depth, weight, transfers, function(e, s) {
+  iota.api.sendTransfer(seed, depth, weight, transfers, function(e, s) {
       if (e) {
           console.log("error sending transfer: " + e);
       }
