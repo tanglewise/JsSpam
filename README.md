@@ -3,9 +3,9 @@ Javascript Spammer
 
 # To run:
 
-Install iota library:
+Install iota library and other dependency:
 
-`npm install iota.lib.js`
+`npm install iota.lib.js && npm install xmlhttprequest`
 
 Download spammer:
 
