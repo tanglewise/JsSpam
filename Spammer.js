@@ -32,7 +32,6 @@ function sleep(ms) {
 }
 
 function get_node_info() {
-  console.log('getting node info')
   node_running = false;
   iota.api.getNodeInfo(function(e, s) {
     if (e) {
@@ -41,7 +40,7 @@ function get_node_info() {
       node_running = true;
       console.log('else')
     }
-    console.log('node info' + s);
+    console.log('node info: ' + JSON.stringify(s));
   });
 
   return node_running
@@ -52,7 +51,7 @@ function send_tx() {
       if (e) {
           console.log("error sending transfer: " + e);
       }
-      console.log("transfer complete: " + s);
+      console.log("transfer complete: " + JSON.stringify(s));
   });
 }
 
@@ -70,7 +69,5 @@ async function spam() {
     spam();
   }
 }
-
-console.log('boutta spam...');
 
 spam();
