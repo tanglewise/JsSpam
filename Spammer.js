@@ -13,7 +13,7 @@ var message = "";
 var tag = "GOOGLE9DOT9COM";
 var depth = 3;
 var weight = 14;
-
+var start_time = performance();
 
 var iota  = new IOTA({
   'host': 'http://localhost',
@@ -44,6 +44,9 @@ function start_spamming() {
 }
 
 function spam() {
+  tx_time = performance();
+  console.log('spam time: ' + (tx_time - start_time) + ' ms');
+  start_time = tx_time;
   send_tx(function() {
     console.log('tx sent : - )');
     spam();
