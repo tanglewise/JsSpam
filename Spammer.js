@@ -1,7 +1,7 @@
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var performance = require("performance-now");
 var IOTA = require("iota.lib.js");
-
+var async = require('async');
 
 var host = 'http://localhost'
 var port = 14265
@@ -31,43 +31,34 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function get_node_info() {
-  node_running = false;
+function start_spamming() {
   iota.api.getNodeInfo(function(e, s) {
     if (e) {
       console.log('error getting node info: ' + e);
+//      start_spamming();
     } else {
-      node_running = true;
-      console.log('else')
+      console.log('node info: ' + JSON.stringify(s));
+      spam();
     }
-    console.log('node info: ' + JSON.stringify(s));
   });
-
-  return node_running
 }
 
-function send_tx() {
+function spam() {
+  send_tx(function() {
+    console.log('tx sent : - )');
+    spam();
+  });
+}
+
+function send_tx(callback) {
+  console.log('sending tx..');
   iota.api.sendTransfer(seed, depth, weight, transfers, function(e, s) {
       if (e) {
           console.log("error sending transfer: " + e);
       }
       console.log("transfer complete: " + JSON.stringify(s));
+      return callback();
   });
 }
 
-async function spam() {
-  var ready = get_node_info();
-
-  if (ready) {
-    print('spamming')
-    while (true) {
-      send_tx();
-    }
-  } else {
-    console.log('wasnt ready, retrying in 1000 ms');
-    await sleep(1000);
-    spam();
-  }
-}
-
-spam();
+start_spamming();
