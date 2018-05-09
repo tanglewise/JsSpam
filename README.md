@@ -9,7 +9,7 @@ Install iota library:
 
 Download spammer:
 
-`git clone https://github.com/tanglewise/JsSpam && cd JsSpam`
+`sudo git clone https://github.com/tanglewise/JsSpam && cd JsSpam`
 
 Run spammer:
 
