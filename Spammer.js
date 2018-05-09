@@ -1,5 +1,5 @@
-// var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-// var performance = require("performance-now");
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+var performance = require("performance-now");
 var IOTA = require("iota.lib.js");
 
 
@@ -25,15 +25,26 @@ var transfers = [{
   'value': value,
   'message': message,
   'tag': tag
-}];
+}]
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function get_node_info() {
-    iota.api.getNodeInfo(function(e, s) {
-      if (e) {
-        console.log('error getting node info: ' + e);
-      }
-      console.log('node info' + s);
-    });
+  console.log('getting node info')
+  node_running = false;
+  iota.api.getNodeInfo(function(e, s) {
+    if (e) {
+      console.log('error getting node info: ' + e);
+    } else {
+      node_running = true;
+      console.log('else')
+    }
+    console.log('node info' + s);
+  });
+
+  return node_running
 }
 
 function send_tx() {
@@ -43,14 +54,23 @@ function send_tx() {
       }
       console.log("transfer complete: " + s);
   });
-
 }
 
-function spam() {
-  while (true) {
-    send_tx();
+async function spam() {
+  var ready = get_node_info();
+
+  if (ready) {
+    print('spamming')
+    while (true) {
+      send_tx();
+    }
+  } else {
+    console.log('wasnt ready, retrying in 1000 ms');
+    await sleep(1000);
+    spam();
   }
 }
 
-get_node_info()
-spam()
+console.log('boutta spam...');
+
+spam();
