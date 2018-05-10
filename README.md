@@ -5,6 +5,8 @@ Javascript Spammer
 
 Install iota library and other dependencies:
 
+`sudo apt-get update && sudo apt-get install nodejs && sudo apt-get install npm`
+
 `npm install iota.lib.js && npm install xmlhttprequest && npm install performance-now`
 
 Download spammer:
