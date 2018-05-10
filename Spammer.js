@@ -13,6 +13,7 @@ var message = "";
 var tag = 'BUY9BLUZELLE9DEV9BLUZELLE99';
 var depth = 3;
 var weight = 14;
+var txs_sent = 0;
 var start_time = performance();
 
 var iota  = new IOTA({
@@ -48,7 +49,7 @@ function spam() {
   console.log('spam time: ' + (tx_time - start_time) + ' ms');
   start_time = tx_time;
   send_tx(function() {
-    console.log('tx sent : - )');
+    console.log('txs sent: ' + txs_sent);
     spam();
   });
 }
@@ -60,7 +61,9 @@ function send_tx(callback) {
           console.log("error sending transfer: " + e);
       }
       console.log("transfer complete: " + JSON.stringify(s));
+      txs_sent++;
       return callback();
+    
   });
 }
 
